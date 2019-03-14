@@ -6,6 +6,18 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Coffee Blend</title>
+       <%@include file="HomeView/CSS.jsp" %> 
+    </head>
+    <body>
+       
+        <!-- Header -->
+        <%@include file="HomeView/Header.jsp" %> 
+        <!-- end Header -->
+
 <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(Plugins/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
@@ -14,8 +26,8 @@
           <div class="row slider-text justify-content-center align-items-center">
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
-            	<h1 class="mb-3 mt-5 bread">About Us</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>About</span></p>
+            	<h1 class="mb-3 mt-5 bread">Về chúng tôi</h1>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Trang chủ</a></span> <span>Về chúng tôi</span></p>
             </div>
 
           </div>
@@ -28,8 +40,8 @@
     	<div class="one-half ftco-animate">
     		<div class="overlap">
 	        <div class="heading-section ftco-animate ">
-	        	<span class="subheading">Discover</span>
-	          <h2 class="mb-4">Our Story</h2>
+	        	<span class="subheading">Khám phá</span>
+	          <h2 class="mb-4">Câu chuyện của chúng tôi</h2>
 	        </div>
 	        <div>
 	  				<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
@@ -43,8 +55,8 @@
 	    <div class="container">
 	      <div class="row justify-content-center mb-5">
 	        <div class="col-md-7 heading-section text-center ftco-animate">
-	        	<span class="subheading">Testimony</span>
-	          <h2 class="mb-4">Customers Says</h2>
+	        	<span class="subheading">Đánh giá</span>
+	          <h2 class="mb-4">Phản hồi khách hàng</h2>
 	          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 	        </div>
 	      </div>
@@ -125,8 +137,8 @@
     		<div class="row align-items-center">
     			<div class="col-md-6 pr-md-5">
     				<div class="heading-section text-md-right ftco-animate">
-	          	<span class="subheading">Discover</span>
-	            <h2 class="mb-4">Our Menu</h2>
+	          	<span class="subheading">Khám phá</span>
+	            <h2 class="mb-4">Menu chúng tôi</h2>
 	            <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
 	            <p><a href="#" class="btn btn-primary btn-outline-primary px-4 py-3">View Full Menu</a></p>
 	          </div>
@@ -206,3 +218,18 @@
         </div>
       </div>
     </section>
+<!-- Footer -->
+        <%@include file="HomeView/Footer.jsp" %> 
+        <!-- end Footer -->
+
+
+
+      <%@include file="HomeView/JS.jsp" %> 
+    
+      <script type="text/javascript">
+             var element = document.getElementById("vechungtoi");
+             element.classList.add("active");
+            document.getElementById("trangchu").classList.remove("active");
+         </script>
+    </body>
+</html>

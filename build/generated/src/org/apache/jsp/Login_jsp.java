@@ -3,6 +3,10 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import java.util.Scanner;
+import Models.clsTaikhoan;
+import java.util.Vector;
+import CSDL.tbTaikhoan;
 
 public final class Login_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -44,6 +48,10 @@ public final class Login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("\n");
       out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("<html>\n");
       out.write("    <head>\n");
@@ -62,6 +70,30 @@ public final class Login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    <link rel=\"stylesheet\" href=\"Plugins/assets/css/default-theme.css\">\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
+      out.write("        ");
+ 
+           
+            String _err = "";
+            if (request.getAttribute("_err") != null) {
+                    _err = (String) request.getAttribute("_err");
+                }
+            
+            String active_login = "", active_cr="";
+            if (request.getAttribute("active_login") != null) {
+                    active_login = (String) request.getAttribute("active_login");
+                }
+            
+            if (request.getAttribute("active_cr") != null) {
+                    active_cr = (String) request.getAttribute("active_cr");
+                }
+            
+            String username_err = "";
+            if (request.getAttribute("username_err") != null) {
+                    username_err = (String) request.getAttribute("username_err");
+                }
+        
+      out.write("\n");
+      out.write("        \n");
       out.write("        <!--  preloader start -->\n");
       out.write("        <div id=\"tb-preloader\">\n");
       out.write("            <div class=\"tb-preloader-wave\"></div>\n");
@@ -77,23 +109,27 @@ public final class Login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                            <div class=\"col-md-6 col-md-offset-3\">\n");
       out.write("                                <dl class=\"accordion login-accordion\">\n");
       out.write("                                    <dt>\n");
-      out.write("                                    <a href=\"#\">Đăng nhập với tài khoản của bạn</a>\n");
+      out.write("                                    <a href=\"#\" class=\"\">Đăng nhập với tài khoản của bạn</a>\n");
       out.write("                                    </dt>\n");
-      out.write("                                    <dd>\n");
+      out.write("                                    <dd style=\"");
+      out.print(active_login);
+      out.write("\">\n");
       out.write("                                        <div class=\"login register \">\n");
       out.write("                                            <div class=\" btn-rounded\">\n");
       out.write("                                                <form class=\"\" action=\"CheckLogin\" id=\"login-form\" method=\"post\" novalidate=\"true\" data-toggle=\"validator\">\n");
       out.write("\n");
       out.write("                                                    <div class=\"form-group\">\n");
-      out.write("                                                        <input type=\"text\" name=\"username\" value=\"\" class=\"form-control\" placeholder=\"Email\" maxlength=\"50\" minlength=\"6\"  data-error=\"Vui lòng nhập email\" >\n");
+      out.write("                                                        <input type=\"text\" name=\"username\" value=\"\" class=\"form-control\" required=\"\"  placeholder=\"Tên đăng nhập\" maxlength=\"50\" minlength=\"6\"  data-error=\"Vui lòng nhập tài khoản\" >\n");
       out.write("                                                        <div class=\"help-block with-errors\"></div>\n");
       out.write("                                                    </div>\n");
       out.write("\n");
       out.write("                                                    <div class=\"form-group\">\n");
-      out.write("                                                        <input maxlength=\"100\"  data-error=\"Vui lòng nhập mật khẩu\" type=\"password\" name=\"password\" value=\"\" class=\"form-control \" placeholder=\"Mật khẩu\">\n");
+      out.write("                                                        <input maxlength=\"100\"  data-error=\"Vui lòng nhập mật khẩu\" required=\"\"  type=\"password\" name=\"password\" value=\"\" class=\"form-control \" placeholder=\"Mật khẩu\">\n");
       out.write("                                                        <div class=\"help-block with-errors\"></div>\n");
       out.write("                                                    </div>\n");
-      out.write("\n");
+      out.write("                                                    <p class=\"text-danger\">");
+      out.print( _err);
+      out.write("</p>\n");
       out.write("                                                    <!-- <span style=\"color: red\"><?= $msg ?></span> -->\n");
       out.write("                                                    <div class=\"form-group\">\n");
       out.write("                                                        <button class=\"btn btn-small btn-dark-solid full-width\" type=\"submit\" value=\"login\">Đăng nhập\n");
@@ -101,8 +137,7 @@ public final class Login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                    </div>\n");
       out.write("\n");
       out.write("                                                    <div class=\"form-group\">\n");
-      out.write("                                                        <input  type=\"checkbox\" value=\"remember-me\" id=\"checkbox1\">\n");
-      out.write("                                                        <label for=\"checkbox1\">Remember me</label>\n");
+      out.write("                                                        <label for=\"\"> <a class=\"pull-left\" href=\"index.jsp\"> Quay lại trang chủ</a></label>\n");
       out.write("                                                        <a class=\"pull-right\" data-toggle=\"modal\" href=\"#forgotPass\"> Forgot Password?</a>\n");
       out.write("                                                    </div>\n");
       out.write("\n");
@@ -114,30 +149,31 @@ public final class Login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                    <dt>\n");
       out.write("                                    <a href=\"#\">Bạn không có tài khoản? Đăng ký ngay!</a>\n");
       out.write("                                    </dt>\n");
-      out.write("                                    <dd>\n");
-      out.write("                                        <form class=\" login\" action=\"CheckLogin\" method=\"post\" data-toggle=\"validator\">\n");
+      out.write("                                    \n");
+      out.write("                                    \n");
+      out.write("                                    <dd style=\"");
+      out.print(active_cr);
+      out.write("\">\n");
+      out.write("                                        <form class=\" login\" action=\"DangkyServlet\" method=\"post\" data-toggle=\"validator\">\n");
       out.write("\n");
       out.write("                                            <div class=\"form-group\">\n");
-      out.write("                                                <input name =\"\" maxlength=\"100\" required=\"\" data-error=\"Vui lòng nhập tên\" type=\"text\" class=\"form-control\" placeholder=\"Tên của bạn\">\n");
+      out.write("                                                <input name =\"ten\" maxlength=\"100\" required=\"\" data-error=\"Vui lòng nhập tên\" type=\"text\" class=\"form-control\" placeholder=\"Tên của bạn\">\n");
       out.write("                                                <div class=\"help-block with-errors\"></div>\n");
       out.write("                                            </div>\n");
-      out.write("\n");
-      out.write("                                            <div class=\"form-group\">\n");
-      out.write("                                                <input name=\"\" maxlength=\"100\" required=\"\" data-error=\"Vui lòng nhập lại email\" type=\"text\" class=\"form-control\" placeholder=\"Email\">\n");
+      out.write("                                            \n");
+      out.write("                                            <div class=\"form-group\" id=\"user-result\">\n");
+      out.write("                                                <input id=\"username\" name=\"username\" minlength=\"6\" required=\"\" data-error=\"Vui lòng nhập lại tài khoản (lớn hơn 6 kí tự)\" type=\"text\" class=\"form-control\" placeholder=\"Tài khoản\">\n");
       out.write("                                                <div class=\"help-block with-errors\"></div>\n");
       out.write("                                            </div>\n");
-      out.write("\n");
+      out.write("                                             <p class=\"text-danger\">");
+      out.print( username_err);
+      out.write("</p>\n");
       out.write("                                            <div class=\"form-group\">\n");
-      out.write("                                                <input minlength=\"6\" required=\"\" data-error=\"Vui lòng nhập lại tài khoản (lớn hơn 6 kí tự)\" type=\"text\" class=\"form-control\" placeholder=\"Tài khoản\">\n");
-      out.write("                                                <div class=\"help-block with-errors\"></div>\n");
-      out.write("                                            </div>\n");
-      out.write("\n");
-      out.write("                                            <div class=\"form-group\">\n");
-      out.write("                                                <input maxlength=\"13\" minlength=\"12\" required=\"\" data-error=\"Số điện thoại không chính xác\" type=\"text\" class=\"form-control\" placeholder=\"Điện thoại\">\n");
+      out.write("                                                <input name=\"phone\" maxlength=\"13\" minlength=\"12\" required=\"\" data-error=\"Số điện thoại không chính xác\" type=\"text\" class=\"form-control\" placeholder=\"Điện thoại\">\n");
       out.write("                                                <div class=\"help-block with-errors\"></div>\n");
       out.write("                                            </div>\n");
       out.write("                                            <div class=\"form-group\">\n");
-      out.write("                                                <input maxlength=\"100\" required=\"\" data-error=\"Mật khẩu phải dài hơn 6 kí tự\" type=\"text\" class=\"form-control\" placeholder=\"Mật khẩu\">\n");
+      out.write("                                                <input name=\"pass\" maxlength=\"100\" required=\"\" data-error=\"Mật khẩu phải dài hơn 6 kí tự\" type=\"text\" class=\"form-control\" placeholder=\"Mật khẩu\">\n");
       out.write("                                                <div class=\"help-block with-errors\"></div>\n");
       out.write("                                            </div>\n");
       out.write("\n");

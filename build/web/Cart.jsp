@@ -6,6 +6,18 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Coffee Blend</title>
+       <%@include file="HomeView/CSS.jsp" %> 
+    </head>
+    <body>
+       
+        <!-- Header -->
+        <%@include file="HomeView/Header.jsp" %> 
+        <!-- end Header -->
+
  <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(Plugins/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
@@ -15,7 +27,7 @@
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
             	<h1 class="mb-3 mt-5 bread">Cart</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home</a></span> <span>Cart</span></p>
             </div>
 
           </div>
@@ -91,24 +103,24 @@
     				<div class="cart-total mb-3">
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
-    						<span>Subtotal</span>
+    						<span>Thành tiền</span>
     						<span>$20.60</span>
     					</p>
     					<p class="d-flex">
-    						<span>Delivery</span>
+    						<span>Thuế(VAT)</span>
     						<span>$0.00</span>
     					</p>
     					<p class="d-flex">
-    						<span>Discount</span>
+    						<span>Giảm giá</span>
     						<span>$3.00</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">
-    						<span>Total</span>
+    						<span>Tổng tiền</span>
     						<span>$17.60</span>
     					</p>
     				</div>
-    				<p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+    				<p class="text-center"><a href="Thanhtoan.jsp" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
     			</div>
     		</div>
 			</div>
@@ -171,3 +183,14 @@
         </div>
     	</div>
     </section>
+<!-- Footer -->
+        <%@include file="HomeView/Footer.jsp" %> 
+        <!-- end Footer -->
+
+
+
+      <%@include file="HomeView/JS.jsp" %> 
+    
+
+    </body>
+</html>

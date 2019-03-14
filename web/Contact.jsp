@@ -6,6 +6,18 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Coffee Blend</title>
+       <%@include file="HomeView/CSS.jsp" %> 
+    </head>
+    <body>
+       
+        <!-- Header -->
+        <%@include file="HomeView/Header.jsp" %> 
+        <!-- end Header -->
+
  <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(Plugins/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
@@ -15,7 +27,7 @@
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
             	<h1 class="mb-3 mt-5 bread">Liên hệ chúng tôi</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Trang chủ</a></span> <span>Liên hệ</span></p>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Trang chủ</a></span> <span>Liên hệ</span></p>
             </div>
 
           </div>
@@ -76,3 +88,19 @@
     </section>
 
     <div id="map"></div>
+    
+<!-- Footer -->
+        <%@include file="HomeView/Footer.jsp" %> 
+        <!-- end Footer -->
+
+
+
+      <%@include file="HomeView/JS.jsp" %> 
+    
+      <script type="text/javascript">
+             var element = document.getElementById("lienhe");
+             element.classList.add("active");
+            document.getElementById("trangchu").classList.remove("active");
+         </script>
+    </body>
+</html>

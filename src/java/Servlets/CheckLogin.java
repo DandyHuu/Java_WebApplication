@@ -9,6 +9,7 @@ import CSDL.CheckConnect;
 import CSDL.tbTaikhoan;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "CheckLogin", urlPatterns = {"/CheckLogin"})
 public class CheckLogin extends HttpServlet {
-
+    
+     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,25 +41,22 @@ public class CheckLogin extends HttpServlet {
             String user = request.getParameter("username");
             String pass = request.getParameter("password");
             
+            String _err;
+              
             tbTaikhoan tk = new tbTaikhoan();
             boolean check = tk.check_login(user, pass);
             if (check == true) {
-                out.println("<h1>Ket noi thanh cong</h1>");
-               response.getHeader("index.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                rd.include(request, response);
+               
             }else{
-                 out.println("<h1>Ket noi that bai</h1>");
+                  _err ="Sai tên tài khoản hoặc mật khẩu";
+                  request.setAttribute("_err", _err);
+                  RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+                  rd.include(request, response);
             }
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CheckLogin</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            
-            out.println("<h1>Servlet CheckLogin at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+           
+          
         }
     }
 
@@ -88,6 +87,8 @@ public class CheckLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        
     }
 
     /**

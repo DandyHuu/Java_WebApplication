@@ -4,57 +4,46 @@
     Author     : Dandy Huu
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="Models.clsMonan"%>
+<%@page import="CSDL.tbMonan"%>
+<%@page import="Models.clsSlide"%>
+<%@page import="java.util.Vector"%>
+<%@page import="CSDL.tbSlide"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<%  tbSlide sl = new tbSlide();
+    Vector<clsSlide> dSlides = sl.LayDSSlides();
+    
+    tbMonan mn = new tbMonan();
+    Vector<clsMonan> dsMonans = mn.LayDSMonAnHot(4);
+    
+    Vector<clsMonan> dsMonans_new_1 = mn.LayDSMonAnNew("LM001", 3);
+    Vector<clsMonan> dsMonans_new_2 = mn.LayDSMonAnNew("LM002", 3);
+    Vector<clsMonan> dsMonans_new_4 = mn.LayDSMonAnNew("LM004", 3);
+%>
 <section class="home-slider owl-carousel">
-    <div class="slider-item" style="background-image: url(Plugins/images/bg_1.jpg);">
+    <% for (clsSlide item : dSlides) { %>
+     
+    <div class="slider-item" style="background-image: url(Plugins/images/<%=item.getHinhanh() %>);">
         <div class="overlay"></div>
         <div class="container">
             <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
                 <div class="col-md-8 col-sm-12 text-center ftco-animate">
                     <span class="subheading">Welcome</span>
-                    <h1 class="mb-4">The Best Coffee Testing Experience</h1>
-                    <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                    <h1 class="mb-4"><%= item.getTitle() %></h1>
+                    <p class="mb-4 mb-md-5"><%= item.getDiscription() %></p>
                     <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Đặt hàng</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Xem thực đơn</a></p>
                 </div>
 
             </div>
         </div>
     </div>
+    <%                  
+             }
+    %>
 
-    <div class="slider-item" style="background-image: url(Plugins/images/bg_2.jpg);">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-                <div class="col-md-8 col-sm-12 text-center ftco-animate">
-                    <span class="subheading">Welcome</span>
-                    <h1 class="mb-4">Amazing Taste &amp; Beautiful Place</h1>
-                    <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                    <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Đặt hàng</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Xem thực đơn</a></p>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="slider-item" style="background-image: url(Plugins/images/bg_3.jpg);">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-                <div class="col-md-8 col-sm-12 text-center ftco-animate">
-                    <span class="subheading">Welcome</span>
-                    <h1 class="mb-4">Creamy Hot and Ready to Serve</h1>
-                    <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                    <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Đặt hàng</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Xem thực đơn</a></p>
-                </div>
-
-            </div>
-        </div>
-    </div>
 </section>
 
 <section class="ftco-intro">
@@ -196,22 +185,22 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="menu-entry">
-                            <a href="#" class="img" style="background-image: url(Plugins/images/menu-1.jpg);"></a>
+                            <a href="Product.jsp" class="img" style="background-image: url(Plugins/images/menu-1.jpg);"></a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="menu-entry mt-lg-4">
-                            <a href="#" class="img" style="background-image: url(Plugins/images/menu-2.jpg);"></a>
+                            <a href="Product.jsp" class="img" style="background-image: url(Plugins/images/menu-2.jpg);"></a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="menu-entry">
-                            <a href="#" class="img" style="background-image: url(Plugins/images/menu-3.jpg);"></a>
+                            <a href="Product.jsp" class="img" style="background-image: url(Plugins/images/menu-3.jpg);"></a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="menu-entry mt-lg-4">
-                            <a href="#" class="img" style="background-image: url(Plugins/images/menu-4.jpg);"></a>
+                            <a href="Product.jsp" class="img" style="background-image: url(Plugins/images/menu-4.jpg);"></a>
                         </div>
                     </div>
                 </div>
@@ -278,50 +267,24 @@
             </div>
         </div>
         <div class="row">
+          <% for(clsMonan item : dsMonans) {%>
             <div class="col-md-3">
                 <div class="menu-entry">
-                    <a href="#" class="img" style="background-image: url(Plugins/images/menu-1.jpg);"></a>
+                    <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="img" style="background-image: url(Plugins/images/<%= item.getHinhanh()%>);"></a>
                     <div class="text text-center pt-4">
-                        <h3><a href="#">Coffee Capuccino</a></h3>
-                        <p>A small river named Duden flows by their place and supplies</p>
-                        <p class="price"><span>$5.90</span></p>
+                        <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%= item.getTenmon()%></a></h3>
+                        <p><%= item.getMota()%></p>
+                        <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
+                           String gia =  formatter.format(item.getDongia())+" VNĐ";
+                        %>
+
+
+                        <p class="price"><span><%=  gia %></span></p>
                         <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="menu-entry">
-                    <a href="#" class="img" style="background-image: url(Plugins/images/menu-2.jpg);"></a>
-                    <div class="text text-center pt-4">
-                        <h3><a href="#">Coffee Capuccino</a></h3>
-                        <p>A small river named Duden flows by their place and supplies</p>
-                        <p class="price"><span>$5.90</span></p>
-                        <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="menu-entry">
-                    <a href="#" class="img" style="background-image: url(Plugins/images/menu-3.jpg);"></a>
-                    <div class="text text-center pt-4">
-                        <h3><a href="#">Coffee Capuccino</a></h3>
-                        <p>A small river named Duden flows by their place and supplies</p>
-                        <p class="price"><span>$5.90</span></p>
-                        <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="menu-entry">
-                    <a href="#" class="img" style="background-image: url(Plugins/images/menu-4.jpg);"></a>
-                    <div class="text text-center pt-4">
-                        <h3><a href="#">Coffee Capuccino</a></h3>
-                        <p>A small river named Duden flows by their place and supplies</p>
-                        <p class="price"><span>$5.90</span></p>
-                        <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
     </div>
 </section>
@@ -330,30 +293,30 @@
     <div class="container-wrap">
         <div class="row no-gutters">
             <div class="col-md-3 ftco-animate">
-                <a href="gallery.html" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-1.jpg);">
+                <a href="#" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-1.jpg);">
                     <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-search"></span>
+                        <span class="">2007</span>
                     </div>
                 </a>
             </div>
             <div class="col-md-3 ftco-animate">
-                <a href="gallery.html" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-2.jpg);">
+                <a href="#" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-2.jpg);">
                     <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-search"></span>
+                        <span class="">2010</span>
                     </div>
                 </a>
             </div>
             <div class="col-md-3 ftco-animate">
-                <a href="gallery.html" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-3.jpg);">
+                <a href="#" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-3.jpg);">
                     <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-search"></span>
+                        <span class="">2015</span>
                     </div>
                 </a>
             </div>
             <div class="col-md-3 ftco-animate">
-                <a href="gallery.html" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-4.jpg);">
+                <a href="#" class="gallery img d-flex align-items-center" style="background-image: url(Plugins/images/gallery-4.jpg);">
                     <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-search"></span>
+                        <span class="">2019</span>
                     </div>
                 </a>
             </div>
@@ -388,115 +351,64 @@
 
                             <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
                                 <div class="row">
+                                   <% for(clsMonan item: dsMonans_new_1){%>
                                     <div class="col-md-4 text-center">
                                         <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/dish-1.jpg);"></a>
+                                            <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="menu-img img mb-4" style="background-image: url(Plugins/images/<%= item.getHinhanh()%>);"></a>
                                             <div class="text">
-                                                <h3><a href="#">Grilled Beef</a></h3>
-                                                <p>Xa xa, đằng sau những ngọn núi chữ, xa các quốc gia Vokalia và Consonantia, có những văn bản mù quáng.</p>
-                                                <p class="price"><span>$2.90</span></p>
+                                                <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%= item.getTenmon()%></a></h3>
+                                                <p><%= item.getMota()%></p>
+                                                 <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
+                                                    String gia =  formatter.format(item.getDongia())+" VNĐ";
+                                                 %>
+                                                 <p class="price"><span><%= gia%></span></p>
                                                 <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/dish-2.jpg);"></a>
-                                            <div class="text">
-                                                <h3><a href="#">Grilled Beef</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/dish-3.jpg);"></a>
-                                            <div class="text">
-                                                <h3><a href="#">Grilled Beef</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <% } %>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
                                 <div class="row">
+                                    <% for(clsMonan item: dsMonans_new_2){%>
                                     <div class="col-md-4 text-center">
                                         <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/drink-1.jpg);"></a>
+                                            <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="menu-img img mb-4" style="background-image: url(Plugins/images/<%= item.getHinhanh()%>);"></a>
                                             <div class="text">
-                                                <h3><a href="#">Lemonade Juice</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
+                                                <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%= item.getTenmon()%></a></h3>
+                                                <p><%= item.getMota()%></p>
+                                                 <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
+                                                    String gia =  formatter.format(item.getDongia())+" VNĐ";
+                                                 %>
+                                                 <p class="price"><span><%= gia%></span></p>
                                                 <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/drink-2.jpg);"></a>
-                                            <div class="text">
-                                                <h3><a href="#">Pineapple Juice</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/drink-3.jpg);"></a>
-                                            <div class="text">
-                                                <h3><a href="#">Soda Drinks</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <% } %>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
                                 <div class="row">
+                                    <% for(clsMonan item: dsMonans_new_4){%>
                                     <div class="col-md-4 text-center">
                                         <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/dessert-1.jpg);"></a>
+                                            <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="menu-img img mb-4" style="background-image: url(Plugins/images/<%= item.getHinhanh()%>);"></a>
                                             <div class="text">
-                                                <h3><a href="#">Hot Cake Honey</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
+                                                <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%= item.getTenmon()%></a></h3>
+                                                <p><%= item.getMota()%></p>
+                                                 <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
+                                                    String gia =  formatter.format(item.getDongia())+" VNĐ";
+                                                 %>
+                                                 <p class="price"><span><%= gia%></span></p>
                                                 <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/dessert-2.jpg);"></a>
-                                            <div class="text">
-                                                <h3><a href="#">Hot Cake Honey</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="menu-wrap">
-                                            <a href="#" class="menu-img img mb-4" style="background-image: url(Plugins/images/dessert-3.jpg);"></a>
-                                            <div class="text">
-                                                <h3><a href="#">Hot Cake Honey</a></h3>
-                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                                                <p class="price"><span>$2.90</span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>

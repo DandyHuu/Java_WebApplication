@@ -4,6 +4,10 @@
     Author     : Dandy Huu
 --%>
 
+<%@page import="java.util.Scanner"%>
+<%@page import="Models.clsTaikhoan"%>
+<%@page import="java.util.Vector"%>
+<%@page import="CSDL.tbTaikhoan"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,6 +27,28 @@
     <link rel="stylesheet" href="Plugins/assets/css/default-theme.css">
     </head>
     <body>
+        <% 
+           
+            String _err = "";
+            if (request.getAttribute("_err") != null) {
+                    _err = (String) request.getAttribute("_err");
+                }
+            
+            String active_login = "", active_cr="";
+            if (request.getAttribute("active_login") != null) {
+                    active_login = (String) request.getAttribute("active_login");
+                }
+            
+            if (request.getAttribute("active_cr") != null) {
+                    active_cr = (String) request.getAttribute("active_cr");
+                }
+            
+            String username_err = "";
+            if (request.getAttribute("username_err") != null) {
+                    username_err = (String) request.getAttribute("username_err");
+                }
+        %>
+        
         <!--  preloader start -->
         <div id="tb-preloader">
             <div class="tb-preloader-wave"></div>
@@ -38,23 +64,23 @@
                             <div class="col-md-6 col-md-offset-3">
                                 <dl class="accordion login-accordion">
                                     <dt>
-                                    <a href="#">Đăng nhập với tài khoản của bạn</a>
+                                    <a href="#" class="">Đăng nhập với tài khoản của bạn</a>
                                     </dt>
-                                    <dd>
+                                    <dd style="<%=active_login%>">
                                         <div class="login register ">
                                             <div class=" btn-rounded">
                                                 <form class="" action="CheckLogin" id="login-form" method="post" novalidate="true" data-toggle="validator">
 
                                                     <div class="form-group">
-                                                        <input type="text" name="username" value="" class="form-control" placeholder="Email" maxlength="50" minlength="6"  data-error="Vui lòng nhập email" >
+                                                        <input type="text" name="username" value="" class="form-control" required=""  placeholder="Tên đăng nhập" maxlength="50" minlength="6"  data-error="Vui lòng nhập tài khoản" >
                                                         <div class="help-block with-errors"></div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <input maxlength="100"  data-error="Vui lòng nhập mật khẩu" type="password" name="password" value="" class="form-control " placeholder="Mật khẩu">
+                                                        <input maxlength="100"  data-error="Vui lòng nhập mật khẩu" required=""  type="password" name="password" value="" class="form-control " placeholder="Mật khẩu">
                                                         <div class="help-block with-errors"></div>
                                                     </div>
-
+                                                    <p class="text-danger"><%= _err%></p>
                                                     <!-- <span style="color: red"><?= $msg ?></span> -->
                                                     <div class="form-group">
                                                         <button class="btn btn-small btn-dark-solid full-width" type="submit" value="login">Đăng nhập
@@ -62,8 +88,7 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <input  type="checkbox" value="remember-me" id="checkbox1">
-                                                        <label for="checkbox1">Remember me</label>
+                                                        <label for=""> <a class="pull-left" href="index.jsp"> Quay lại trang chủ</a></label>
                                                         <a class="pull-right" data-toggle="modal" href="#forgotPass"> Forgot Password?</a>
                                                     </div>
 
@@ -75,30 +100,27 @@
                                     <dt>
                                     <a href="#">Bạn không có tài khoản? Đăng ký ngay!</a>
                                     </dt>
-                                    <dd>
-                                        <form class=" login" action="CheckLogin" method="post" data-toggle="validator">
+                                    
+                                    
+                                    <dd style="<%=active_cr%>">
+                                        <form class=" login" action="DangkyServlet" method="post" data-toggle="validator">
 
                                             <div class="form-group">
-                                                <input name ="" maxlength="100" required="" data-error="Vui lòng nhập tên" type="text" class="form-control" placeholder="Tên của bạn">
+                                                <input name ="ten" maxlength="100" required="" data-error="Vui lòng nhập tên" type="text" class="form-control" placeholder="Tên của bạn">
                                                 <div class="help-block with-errors"></div>
                                             </div>
-
-                                            <div class="form-group">
-                                                <input name="" maxlength="100" required="" data-error="Vui lòng nhập lại email" type="text" class="form-control" placeholder="Email">
+                                            
+                                            <div class="form-group" id="user-result">
+                                                <input id="username" name="username" minlength="6" required="" data-error="Vui lòng nhập lại tài khoản (lớn hơn 6 kí tự)" type="text" class="form-control" placeholder="Tài khoản">
                                                 <div class="help-block with-errors"></div>
                                             </div>
-
+                                             <p class="text-danger"><%= username_err%></p>
                                             <div class="form-group">
-                                                <input minlength="6" required="" data-error="Vui lòng nhập lại tài khoản (lớn hơn 6 kí tự)" type="text" class="form-control" placeholder="Tài khoản">
-                                                <div class="help-block with-errors"></div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <input maxlength="13" minlength="12" required="" data-error="Số điện thoại không chính xác" type="text" class="form-control" placeholder="Điện thoại">
+                                                <input name="phone" maxlength="13" minlength="12" required="" data-error="Số điện thoại không chính xác" type="text" class="form-control" placeholder="Điện thoại">
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                             <div class="form-group">
-                                                <input maxlength="100" required="" data-error="Mật khẩu phải dài hơn 6 kí tự" type="text" class="form-control" placeholder="Mật khẩu">
+                                                <input name="pass" maxlength="100" required="" data-error="Mật khẩu phải dài hơn 6 kí tự" type="text" class="form-control" placeholder="Mật khẩu">
                                                 <div class="help-block with-errors"></div>
                                             </div>
 

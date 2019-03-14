@@ -6,8 +6,13 @@
 package Servlets;
 
 import CSDL.CheckConnect;
+import CSDL.tbMonan;
+import CSDL.tbSlide;
+import Models.clsMonan;
+import Models.clsSlide;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +49,22 @@ public class check extends HttpServlet {
             out.println("<h1>Servlet check at " + request.getContextPath() + "</h1>");
             CheckConnect ch = new CheckConnect();
             boolean check = ch.check();
+           int a = 100000;
             if (check == true) {
                 out.println("<h1>Ket noi thanh cong</h1>");
+//                tbMonan ma = new tbMonan();
+//                Vector<clsMonan> dsmonan = ma.LayDSMonAn();
+                 tbSlide sl = new tbSlide();
+                Vector<clsSlide> dssl = sl.LayDSSlides();
+                out.println("<h1>"+ dssl.size()+"</h1>");
+                if (dssl.size() >0) {
+                    for (clsSlide item : dssl) {
+                        out.println("<h1>"+item.getDiscription()+" - "+item.getTitle()+" - "+item.getHinhanh()+"</h1>");
+                    }
+                }
+                else{
+                    out.println("<h1>Ket noi that bai</h1>");
+                }
             }else{
                  out.println("<h1>Ket noi that bai</h1>");
             }
