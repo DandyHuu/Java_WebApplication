@@ -21,34 +21,37 @@ import java.util.logging.Logger;
  * @author Dandy Huu
  */
 public class tbTaikhoan {
-    public boolean check_login(String user, String pass){
+        public Vector<clsTaikhoan> check_login(String user, String pass)
+    {
+        Vector<clsTaikhoan> ds = new Vector<clsTaikhoan>();
         Connection cnn = Database.KetnoiCSDL();
-        boolean kq = false;
-        if (cnn != null) {
+        if(cnn!=null)
+        {
             try {
-                String sql = "SELECT * FROM taikhoan WHERE Username = ? and Password = ?";
+            String sql = "SELECT * FROM taikhoan WHERE Username = ? and Password = ?";
                 
                 PreparedStatement stm = cnn.prepareStatement(sql);
                 stm.setString(1, user);
                 stm.setString(2, pass);
                 ResultSet rs = stm.executeQuery();
-                if (rs.next()) {
-                    kq = true;
-                    
-                }
-                else{
-                    kq = false;
+                while(rs.next())//duyệt từng bản ghi kết quả select
+                {
+                    clsTaikhoan sl = new clsTaikhoan();
+                    sl.setUser(rs.getString("Username"));
+                    sl.setPassword(rs.getString("Password"));
+                    sl.setName(rs.getString("Ten"));
+                    sl.setPhone(rs.getString("Sodienthoai"));
+                    sl.setMaphanquyen(rs.getString("maphanquyen"));
+                    ds.add(sl);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(tbTaikhoan.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         }
-        else{
-            kq = false;
-        }
-        
-        return kq;
+        return ds;
     }
+    
 //    check_user
     
     public boolean check_user(String user){
@@ -94,6 +97,9 @@ public class tbTaikhoan {
                     clsTaikhoan sl = new clsTaikhoan();
                     sl.setUser(rs.getString("Username"));
                     sl.setPassword(rs.getString("Password"));
+                    sl.setName(rs.getString("Ten"));
+                    sl.setPhone(rs.getString("Sodienthoai"));
+                    sl.setMaphanquyen(rs.getString("maphanquyen"));
                     ds.add(sl);
                 }
             } catch (SQLException ex) {
@@ -102,5 +108,83 @@ public class tbTaikhoan {
 
         }
         return ds;
+    }
+      
+       public Vector<clsTaikhoan> LayDSUsersByUser( String name)
+    {
+        Vector<clsTaikhoan> ds = new Vector<clsTaikhoan>();
+        Connection cnn = Database.KetnoiCSDL();
+        if(cnn!=null)
+        {
+            String sql = "SELECT * FROM taikhoan WHERE Username = '"+name+"'";
+            try {
+                Statement stm = cnn.createStatement();
+                ResultSet rs = stm.executeQuery(sql);
+                while(rs.next())//duyệt từng bản ghi kết quả select
+                {
+                    clsTaikhoan sl = new clsTaikhoan();
+                    sl.setUser(rs.getString("Username"));
+                    sl.setPassword(rs.getString("Password"));
+                    sl.setName(rs.getString("Ten"));
+                    sl.setPhone(rs.getString("Sodienthoai"));
+                    sl.setMaphanquyen(rs.getString("maphanquyen"));
+                    ds.add(sl);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(tbTaikhoan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return ds;
+    }
+       
+       public boolean ThemTaikhoan(clsTaikhoan ma)
+    {
+        Connection cnn = Database.KetnoiCSDL();
+        if(cnn!=null)
+        {
+            String sql = "INSERT INTO taikhoan VALUES(?,?,?,?,?)";
+            try {
+                PreparedStatement stm = cnn.prepareStatement(sql);
+                stm.setString(1, ma.getUser());
+                stm.setString(2, ma.getName());
+               stm.setString(3, ma.getPhone());
+                 stm.setString(4, ma.getPassword());
+                stm.setString(5, ma.getMaphanquyen());
+                int n = stm.executeUpdate();
+                if(n<=0)
+                    return false;
+                else
+                    return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(tbMonan.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }
+        else
+            return false;
+    }
+       
+       public boolean XoaNguoidung(String id)
+    {
+        Connection cnn = Database.KetnoiCSDL();
+        if(cnn!=null)
+        {
+            String sql = "DELETE FROM taikhoan WHERE Username=?";
+            try {
+                PreparedStatement stm = cnn.prepareStatement(sql);
+                stm.setString(1, id);
+                int n = stm.executeUpdate();
+                if(n<=0)
+                    return false;
+                else
+                    return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(tbMonan.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }
+        else
+            return false;
     }
 }

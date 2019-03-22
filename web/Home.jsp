@@ -4,6 +4,8 @@
     Author     : Dandy Huu
 --%>
 
+<%@page import="Models.clsBlog"%>
+<%@page import="CSDL.tbBlog"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="Models.clsMonan"%>
 <%@page import="CSDL.tbMonan"%>
@@ -20,7 +22,11 @@
     
     Vector<clsMonan> dsMonans_new_1 = mn.LayDSMonAnNew("LM001", 3);
     Vector<clsMonan> dsMonans_new_2 = mn.LayDSMonAnNew("LM002", 3);
+    Vector<clsMonan> dsMonans_new_3 = mn.LayDSMonAnNew("LM003", 4);
     Vector<clsMonan> dsMonans_new_4 = mn.LayDSMonAnNew("LM004", 3);
+    
+    tbBlog blog = new tbBlog();
+    Vector<clsBlog> dsblog = blog.LayDSBlogLimit(3);
 %>
 <section class="home-slider owl-carousel">
     <% for (clsSlide item : dSlides) { %>
@@ -267,20 +273,20 @@
             </div>
         </div>
         <div class="row">
-          <% for(clsMonan item : dsMonans) {%>
+          <% for(clsMonan item : dsMonans_new_3) {%>
             <div class="col-md-3">
                 <div class="menu-entry">
                     <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="img" style="background-image: url(Plugins/images/<%= item.getHinhanh()%>);"></a>
                     <div class="text text-center pt-4">
                         <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%= item.getTenmon()%></a></h3>
-                        <p><%= item.getMota()%></p>
+                        <p style="overflow: hidden;max-height: 52px;"><%= item.getMota()%></p>
                         <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
                            String gia =  formatter.format(item.getDongia())+" VNĐ";
                         %>
 
 
                         <p class="price"><span><%=  gia %></span></p>
-                        <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                        <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                     </div>
                 </div>
             </div>
@@ -357,12 +363,12 @@
                                             <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="menu-img img mb-4" style="background-image: url(Plugins/images/<%= item.getHinhanh()%>);"></a>
                                             <div class="text">
                                                 <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%= item.getTenmon()%></a></h3>
-                                                <p><%= item.getMota()%></p>
+                                                <p style="overflow: hidden;max-height: 52px;"><%= item.getMota()%></p>
                                                  <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
                                                     String gia =  formatter.format(item.getDongia())+" VNĐ";
                                                  %>
                                                  <p class="price"><span><%= gia%></span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                                                <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -378,12 +384,12 @@
                                             <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="menu-img img mb-4" style="background-image: url(Plugins/images/<%= item.getHinhanh()%>);"></a>
                                             <div class="text">
                                                 <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%= item.getTenmon()%></a></h3>
-                                                <p><%= item.getMota()%></p>
+                                                <p style="overflow: hidden;max-height: 52px;"><%= item.getMota()%></p>
                                                  <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
                                                     String gia =  formatter.format(item.getDongia())+" VNĐ";
                                                  %>
                                                  <p class="price"><span><%= gia%></span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                                                <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -404,7 +410,7 @@
                                                     String gia =  formatter.format(item.getDongia())+" VNĐ";
                                                  %>
                                                  <p class="price"><span><%= gia%></span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                                                <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -510,51 +516,24 @@
             </div>
         </div>
         <div class="row d-flex">
+            <% for(clsBlog item : dsblog){%>
             <div class="col-md-4 d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('Plugins/images/image_1.jpg');">
+                    <a href="Blog-detail.jsp?id=<%= item.getMablog() %>" class="block-20" style="background-image: url('Plugins/images/<%= item.getHinhanh() %>');">
                     </a>
                     <div class="text py-4 d-block">
                         <div class="meta">
-                            <div><a href="#">Sept 10, 2018</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                            <div><a href="#"><%= item.getThoigian()%></a></div>
+                            <div><a href="#"><%= item.getNguoidang()%></a></div>
+                            
                         </div>
-                        <h3 class="heading mt-2"><a href="#">The Delicious Pizza</a></h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                        <h3 class="heading mt-2"><a href="Blog-detail.jsp?id=<%= item.getMablog() %>"><%= item.getTieude()%></a></h3>
+                        <p  style="overflow: hidden;max-height: 52px;" ><%= item.getNoidung()%></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('Plugins/images/image_2.jpg');">
-                    </a>
-                    <div class="text py-4 d-block">
-                        <div class="meta">
-                            <div><a href="#">Sept 10, 2018</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading mt-2"><a href="#">The Delicious Pizza</a></h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('Plugins/images/image_3.jpg');">
-                    </a>
-                    <div class="text py-4 d-block">
-                        <div class="meta">
-                            <div><a href="#">Sept 10, 2018</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                        <h3 class="heading mt-2"><a href="#">The Delicious Pizza</a></h3>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                    </div>
-                </div>
-            </div>
+            <%}%>
+           
         </div>
     </div>
 </section>

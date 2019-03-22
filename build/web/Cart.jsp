@@ -4,6 +4,11 @@
     Author     : Dandy Huu
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="Models.Item"%>
+<%@page import="Models.clsMonan"%>
+<%@page import="CSDL.tbMonan"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +18,18 @@
        <%@include file="HomeView/CSS.jsp" %> 
     </head>
     <body>
-       
+       <%
+           tbMonan mn = new tbMonan();
+            Vector<clsMonan> monan_hot=mn.LayDSMonAnHot(4);
+            
+//             MyCart cart2 = (MyCart) session.getAttribute("Cart");
+//        if (session.getAttribute("Cart") == null) {
+//            cart2 = new MyCart();
+//            session.setAttribute("Cart", cart2);
+//        }
+            
+            
+       %>
         <!-- Header -->
         <%@include file="HomeView/Header.jsp" %> 
         <!-- end Header -->
@@ -26,8 +42,8 @@
           <div class="row slider-text justify-content-center align-items-center">
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
-            	<h1 class="mb-3 mt-5 bread">Cart</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home</a></span> <span>Cart</span></p>
+            	<h1 class="mb-3 mt-5 bread">Giỏ hàng</h1>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Trang chủ</a></span> <span>Giỏ hàng</span></p>
             </div>
 
           </div>
@@ -52,137 +68,106 @@
 						      </tr>
 						    </thead>
 						    <tbody>
+                                                        <% for(Map.Entry<String, Item> list : cart.getCart().entrySet()){ %>
 						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="icon-close"></span></a></td>
+						        <td class="product-remove"><a href="RemoteCart.jsp?id=<%= list.getKey() %>"><span class="icon-close"></span></a></td>
 						        
-						        <td class="image-prod"><div class="img" style="background-image:url(Plugins/images/menu-2.jpg);"></div></td>
+						        <td class="image-prod"><div class="img" style="background-image:url(Plugins/images/<%= list.getValue().getProduct().getHinhanh()  %>);"></div></td>
 						        
 						        <td class="product-name">
-						        	<h3>Creamy Latte Coffee</h3>
-						        	<p>Far far away, behind the word mountains, far from the countries</p>
+						        	<h3><%= list.getValue().getProduct().getTenmon()%></h3>
+                                                                <p><%= list.getValue().getProduct().getMota()%></p>
 						        </td>
-						        
-						        <td class="price">$4.90</td>
+						         <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
+                                                                    String gia =  formatter.format(list.getValue().getProduct().getDongia())+" VNĐ";
+                                                                    String tonggia = formatter.format(list.getValue().getProduct().getDongia() *  list.getValue().getQuantity())+"VND";
+                                                                 %>
+						        <td class="price"><%= gia %></td>
 						        
 						        <td class="quantity">
 						        	<div class="input-group mb-3">
-					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+					             	<input type="text" name="quantity" class="quantity form-control input-number" value="<%= list.getValue().getQuantity()%>" min="1" max="100">
 					          	</div>
 					          </td>
 						        
-						        <td class="total">$4.90</td>
+						        <td class="total"><%= tonggia %></td>
 						      </tr><!-- END TR-->
-
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="icon-close"></span></a></td>
-						        
-						        <td class="image-prod"><div class="img" style="background-image:url(Plugins/images/dish-2.jpg);"></div></td>
-						        
-						        <td class="product-name">
-						        	<h3>Grilled Ribs Beef</h3>
-						        	<p>Far far away, behind the word mountains, far from the countries</p>
-						        </td>
-						        
-						        <td class="price">$15.70</td>
-						        
-						        <td class="quantity">
-						        	<div class="input-group mb-3">
-					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-					          	</div>
-					          </td>
-						        
-						        <td class="total">$15.70</td>
-						      </tr><!-- END TR-->
+                                                      <% } %>
+						     
 						    </tbody>
 						  </table>
 					  </div>
     			</div>
     		</div>
     		<div class="row justify-content-end">
+                     <%  String monney = "";
+                        double tonggia=0;
+                         for(Map.Entry<String, Item> list : cart.getCart().entrySet()){ 
+                                DecimalFormat formatter = new DecimalFormat("###,###,###"); 
+                                tonggia = tonggia + (list.getValue().getProduct().getDongia() *  list.getValue().getQuantity());
+                               monney = formatter.format(tonggia)+"VNĐ";
+                              }
+                              
+                     %>
     			<div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
     				<div class="cart-total mb-3">
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
     						<span>Thành tiền</span>
-    						<span>$20.60</span>
+                                                <span><%=  monney%></span>
     					</p>
     					<p class="d-flex">
     						<span>Thuế(VAT)</span>
-    						<span>$0.00</span>
+    						<span>0 VND</span>
     					</p>
     					<p class="d-flex">
     						<span>Giảm giá</span>
-    						<span>$3.00</span>
+    						<span>0 VND</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">
     						<span>Tổng tiền</span>
-    						<span>$17.60</span>
+    						<span><%=  monney%></span>
     					</p>
     				</div>
     				<p class="text-center"><a href="Thanhtoan.jsp" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
     			</div>
+                        
     		</div>
 			</div>
 		</section>
 
-    <section class="ftco-section">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section ftco-animate text-center">
-          	<span class="subheading">Discover</span>
-            <h2 class="mb-4">Related products</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-          </div>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate text-center">
+                <span class="subheading">Khám phá</span>
+                <h2 class="mb-4">Sản phẩm Hot</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
         </div>
         <div class="row">
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(Plugins/images/menu-1.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(Plugins/images/menu-2.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(Plugins/images/menu-3.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(Plugins/images/menu-4.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
+            <% for(clsMonan item : monan_hot){%>
+            <div class="col-md-3">
+                <div class="menu-entry">
+                    <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="img" style="background-image: url(Plugins/images/<%=item.getHinhanh()%>);"></a>
+                    <div class="text text-center pt-4">
+                        <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%=item.getTenmon()%></a></h3>
+                        <p class="" style="overflow: hidden;max-height: 52px;"><%=item.getMota()%></p>
+                        <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
+                           String gia =  formatter.format(item.getDongia())+" VNĐ";
+                        %>
+
+
+                        <p class="price"><span><%=  gia %></span></p>
+                        <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                    </div>
+                </div>
+            </div>
+            <%}%>
         </div>
-    	</div>
-    </section>
+    </div>
+</section>
 <!-- Footer -->
         <%@include file="HomeView/Footer.jsp" %> 
         <!-- end Footer -->

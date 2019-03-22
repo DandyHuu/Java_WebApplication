@@ -15,14 +15,18 @@ public class clsMonan {
     public String hinhanh;
      public String mota;
     public double dongia;
+    public int hot;
+    public int spnew;
     public String maloai;
     public clsMonan() {
     }
-    public clsMonan(String mamon, String tenmon,String mota, String hinhanh, double dongia, String maloai){
+    public clsMonan(String mamon, String tenmon,String mota, String hinhanh,int hot,int spnew, double dongia, String maloai){
         this.mamon= mamon;
         this.tenmon = tenmon;
         this.hinhanh = hinhanh;
-        this.mota=mamon;
+        this.mota= mota;
+        this.hot = hot;
+        this.spnew = spnew;
         this.dongia = dongia;
         this.maloai = maloai;
     }
@@ -61,5 +65,18 @@ public class clsMonan {
     }
     public String getMaloai(){
         return maloai;
+    }
+    
+      public void setSpHot(int hot){
+        this.hot = hot;
+    }
+    public int getSpHot(){
+        return hot;
+    }
+     public void setSpNew(int spnew){
+        this.spnew = spnew;
+    }
+    public int getSpNew(){
+        return spnew;
     }
 }

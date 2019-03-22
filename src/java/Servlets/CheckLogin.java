@@ -7,14 +7,18 @@ package Servlets;
 
 import CSDL.CheckConnect;
 import CSDL.tbTaikhoan;
+import Models.MyCart;
+import Models.clsTaikhoan;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,8 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "CheckLogin", urlPatterns = {"/CheckLogin"})
 public class CheckLogin extends HttpServlet {
-    
-     
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,23 +43,49 @@ public class CheckLogin extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String user = request.getParameter("username");
             String pass = request.getParameter("password");
-            
+
             String _err;
-              
+
             tbTaikhoan tk = new tbTaikhoan();
-            boolean check = tk.check_login(user, pass);
-            if (check == true) {
-                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                rd.include(request, response);
-               
-            }else{
-                  _err ="Sai tên tài khoản hoặc mật khẩu";
-                  request.setAttribute("_err", _err);
-                  RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-                  rd.include(request, response);
+            Vector<clsTaikhoan> check = tk.check_login(user, pass);
+            MyCart cart = new MyCart();
+            int n = check.size();
+            int role = 0;
+            if (n > 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("User", check);
+                session.setAttribute("Cart", cart);
+//                  String r = check.
+                for (clsTaikhoan item : check) {
+                    String r = item.getMaphanquyen();
+                    if (r.equalsIgnoreCase("PQ001") == true) {
+                        role = 1;
+
+                    } else {
+                        role = 2;
+                    }
+                   
+                }
+                
+                if (role == 1) {
+                     response.sendRedirect("AdminView/Admin.jsp");
+                } else {
+                    RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                    rd.include(request, response);
+                }
+
             }
-           
-          
+            else {
+                role = 0;
+                _err = "Sai tên tài khoản hoặc mật khẩu";
+                request.setAttribute("_err", _err);
+                RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+                rd.include(request, response);
+            }
+
+//           
+//               
+//           
         }
     }
 
@@ -87,8 +116,7 @@ public class CheckLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
+
     }
 
     /**

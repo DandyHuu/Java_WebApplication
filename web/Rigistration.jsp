@@ -48,6 +48,12 @@
             if (request.getAttribute("username_err") != null) {
                     username_err = (String) request.getAttribute("username_err");
                 }
+            
+            String check_add="";
+             if (request.getAttribute("check_add") != null) {
+                    username_err = (String) request.getAttribute("check_add");
+                }
+            
         %>
         
         <!--  preloader start -->
@@ -64,7 +70,8 @@
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3">
                                 <dl class="accordion login-accordion">
-                                   
+                                    
+                                    
                                     <dt>
                                     <a href="#">Bạn không có tài khoản? Đăng ký ngay!</a>
                                     </dt>
@@ -95,12 +102,13 @@
 
 
                                             <div class="form-group">
-                                                <button class="btn btn-small btn-dark-solid full-width " id="login-form-submit" name="login-form-submit" value="login">Đăng kí
+                                                <button type="submit" class="btn btn-small btn-dark-solid full-width " id="login-form-submit" name="login-form-submit" value="login">Đăng kí
                                                 </button>
                                             </div>
 
 
                                         </form>
+                                            <p class="text-warning"><%= check_add %></p>
                                     </dd>
                                     
                                      <dt>

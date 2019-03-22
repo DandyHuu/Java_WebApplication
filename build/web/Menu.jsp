@@ -370,7 +370,7 @@
                                                     String gia =  formatter.format(item.getDongia())+" VNĐ";
                                                  %>
                                                  <p class="price"><span><%= gia%></span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                                                <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -391,7 +391,7 @@
                                                     String gia =  formatter.format(item.getDongia())+" VNĐ";
                                                  %>
                                                  <p class="price"><span><%= gia%></span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                                                <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -412,7 +412,7 @@
                                                     String gia =  formatter.format(item.getDongia())+" VNĐ";
                                                  %>
                                                  <p class="price"><span><%= gia%></span></p>
-                                                <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                                                <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                                             </div>
                                         </div>
                                     </div>

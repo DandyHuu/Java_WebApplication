@@ -6,6 +6,7 @@
 package Servlets;
 
 import CSDL.tbTaikhoan;
+import Models.clsTaikhoan;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -45,7 +46,7 @@ public class DangkyServlet extends HttpServlet {
                 String ten_err = "", username_err = "", phone_err = "", pass_err = "";
                 String active_login = "display: none !important;";
                 String active_cr = "display: block !important;";
-
+                String check_add = "";
 
 
                 tbTaikhoan tk = new tbTaikhoan();
@@ -60,9 +61,21 @@ public class DangkyServlet extends HttpServlet {
 
                 }
                 else{
-
-                    RequestDispatcher rd = request.getRequestDispatcher("Rigistration.jsp");
+                    tbTaikhoan newTaikhoan = new tbTaikhoan();
+                    clsTaikhoan item = new clsTaikhoan(username, pass, name, phone, "PQ002");
+                    
+                    boolean kq = newTaikhoan.ThemTaikhoan(item);
+                    
+                    if (kq == true ) {
+                        RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
                     rd.include(request, response);
+                    }
+                    else{
+                        RequestDispatcher rd = request.getRequestDispatcher("Rigistration.jsp");
+                    rd.include(request, response);
+                    }
+
+                   
                 }
             
         }

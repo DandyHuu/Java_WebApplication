@@ -96,7 +96,7 @@
                                 </span>
                             </div>
                         </div>
-                        <p><a href="cart.html" class="btn btn-primary py-3 px-5">Thêm vào giỏ</a></p>
+                        <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary py-3 px-5">Thêm vào giỏ</a></p>
                     </div>
                     <% }%>
         </div>
@@ -119,14 +119,14 @@
                     <a href="Product-detail.jsp?id=<%=item.getMamon()%>" class="img" style="background-image: url(Plugins/images/<%=item.getHinhanh()%>);"></a>
                     <div class="text text-center pt-4">
                         <h3><a href="Product-detail.jsp?id=<%=item.getMamon()%>"><%=item.getTenmon()%></a></h3>
-                        <p><%=item.getMota()%></p>
+                        <p style="overflow: hidden;max-height: 52px;" ><%=item.getMota()%></p>
                         <% DecimalFormat formatter = new DecimalFormat("###,###,###"); 
                            String gia =  formatter.format(item.getDongia())+" VNĐ";
                         %>
 
 
                         <p class="price"><span><%=  gia %></span></p>
-                        <p><a href="#" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
+                        <p><a href="AddtoCart.jsp?id=<%=item.getMamon()%>" class="btn btn-primary btn-outline-primary">Thêm vào giỏ</a></p>
                     </div>
                 </div>
             </div>
@@ -142,6 +142,11 @@
 
 <%@include file="HomeView/JS.jsp" %> 
 
+ <script type="text/javascript">
+             var element = document.getElementById("sanpham");
+             element.classList.add("active");
+            document.getElementById("trangchu").classList.remove("active");
+         </script>
 
 </body>
 </html>
